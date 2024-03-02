@@ -1,0 +1,45 @@
+doctype html
+html(lang='en' style='height: 100%; margin: 0px; padding: 0px')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,height=device-height,initial-scale=1,viewport-fit=cover')
+    title Pyscript cutom widget
+
+    link(rel="stylesheet" href="js/codemirror/lib/codemirror.css")/
+    script(src='https://docs.getgrist.com/grist-plugin-api.js')
+    script(src="js/codemirror/lib/codemirror.js" defer)
+    each mode in ["pug", "python", "toml"]
+      script(src="js/codemirror/mode/" + mode + "/" + mode + ".js" defer)
+    script(src='js/pug.js')
+    script.
+      var pug = require('pug');
+    script(src="js/toml.js" defer)
+    script(src="js/rapydscript.js" defer)
+    script(src="js/load-pyj.js" defer)
+
+    style.
+      body {height: 100%; display: flex; flex-direction: column; margin: 0px; overflow: hidden;}
+      #bar {display: none; flex: 0; justify-content: space-between; font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
+        #bar div {display: flex; flex-direction: row;}
+        .tab {padding: 2px 8px; border: 1px solid gray; cursor: pointer;}
+          .tab * {pointer-events: none;}
+        .btn {padding: 2px 8px; border: 1px solid gray; cursor: pointer;}
+      .errors {display: none; color: red;}
+      #editors {display: inline-block; flex-grow:1; height: 90%; box-sizing: border-box; border-top:1px solid #a0a0a0;  border-bottom:1px solid #a0a0a0;}
+      #widget {display: none; flex: 1; border: 0px;}
+        #widget iframe {height: 100%; width: 100%; border: 0px;}
+      .CodeMirror {width: 100%; height: 100%;}
+
+  body
+    #bar
+      #tabs
+      #btns
+        #install.btn Install
+        #preview.btn Preview
+        #editor.btn(style="display: none;") Editor
+    #errors.errors
+    #cfg_errors.errors Errors in config. Please cancel and fix them.
+    #editors
+    #widget
+      div
+    script(src="api.pyj" type="pyj")
