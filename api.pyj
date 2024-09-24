@@ -122,7 +122,7 @@ def showPreview(*_):
     pyscript = document.createElement("script")
     pyscript.type = "pyj"
     try:
-      pyscript.innerHTML = eval(compiler.compile(code.editor.getValue()))
+      eval(compiler.compile(code.editor.getValue()))
     except Exception as e:
       console.error(e)
       errors = the("errors")

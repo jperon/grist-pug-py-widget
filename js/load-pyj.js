@@ -1,5 +1,5 @@
 const compiler = RapydScript.create_embedded_compiler();
-window.onload = async () => {
+(async () => {
   for (script of document.querySelectorAll("script[type='pyj']")) {
     let code
     if (src = script.src) {
@@ -8,10 +8,11 @@ window.onload = async () => {
       code = script.textContent
     }
     try {
-      eval(`(async () => {${compiler.compile(code)}})()`)
+      script = document.createElement("script")
+      script.innerHTML = compiler.compile(code)
+      document.head.appendChild(script)
     } catch (err) {
       console.error(`${src}, ${err.line}, ${err.col}:\n${err.message}`)
       document.body.innerHTML = `<code style="text-color:red"><pre>${src}, ${err.line}, ${err.col}:\n${err.message}</pre></code>`
-    }
-  };
-}
+    }}
+  })()
